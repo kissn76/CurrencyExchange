@@ -168,6 +168,22 @@ def main():
                                         exchangeRateSell real
                                     ); """
 
+    sql_create_table_bank_accounts = """ CREATE TABLE IF NOT EXISTS bank_accounts (
+                                        id integer PRIMARY KEY,
+                                        name text NOT NULL UNIQUE,
+                                        providerId integer,
+                                        currencyId integer,
+                                        note text
+                                    ); """
+
+    sql_create_table_transactions = """ CREATE TABLE IF NOT EXISTS transactions (
+                                        id integer PRIMARY KEY,
+                                        datetime text,
+                                        accountId integer,
+                                        amount real,
+                                        note text
+                                    ); """
+
     conn = create_connection("database.db")
 
     if conn is not None:
