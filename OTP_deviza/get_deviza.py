@@ -6,18 +6,19 @@ def download_exchange_rate(date_from, date_to, currencies):
     deviza_veteli = {}
     deviza_eladasi = {}
 
-    filename = ("-".join(currencies)) + "_" + date_from.replace("-", "") + "-" + date_to.replace("-", "") + ".csv"
+    # filename = ("-".join(currencies)) + "_" + date_from.replace("-", "") + "-" + date_to.replace("-", "") + ".csv"
 
     api_url = "https://www.otpbank.hu/apps/exchangerate/api/downloads/csv/" + date_from + "/" + date_to + "?currencies=" + (",".join(currencies)) + "&lang=HU"
     response = requests.get(api_url)
     responselines = response.text.split('\r\n')
 
-    text_file = open(filename, "wt")
-    text_file.write(response.text)
-    text_file.close()
+    # text_file = open(filename, "wt")
+    # text_file.write(response.text)
+    # text_file.close()
 
     newcurrencies = csv.reader(responselines, delimiter=';')
     newcurrencies = list(newcurrencies)
+    print(newcurrencies[1])
     del newcurrencies[0]
     del newcurrencies[0]
 
@@ -26,6 +27,7 @@ def download_exchange_rate(date_from, date_to, currencies):
         for newcurrency in newcurrencies:
             if len(newcurrency) > 0:
                 if newcurrency[0] == actcurrency:   # currency Név
+                    print(newcurrency)
                     if newestcurrency is None:
                         newestcurrency = newcurrency
                     else:
